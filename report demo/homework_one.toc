@@ -1,0 +1,9 @@
+\contentsline {section}{\numberline {1}模板使用指南}{1}{section.1}%
+\contentsline {subsection}{\numberline {1.1}基本文本与边注}{1}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}图表示例}{1}{subsection.1.2}%
+\contentsline {paragraph}{边注图片}{2}{paragraph*.1}%
+\contentsline {paragraph}{通栏图片}{2}{paragraph*.2}%
+\contentsline {section}{\numberline {2}表格示例}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}边注表格}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}正文宽度表格}{3}{subsection.2.2}%
+\contentsfinish 

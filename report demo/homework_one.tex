@@ -1,0 +1,174 @@
+% !TEX program = xelatex
+% -------------------------------------------------------
+\documentclass[nols, a4paper]{tufte-handout}
+
+% --- 基础设置与宏包 ---
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{lipsum}
+\usepackage{hyperref}
+\hypersetup{colorlinks, allcolors=blue}
+
+% 设置全文行距为 1.5 倍 ---
+\usepackage{setspace}
+
+% 自定义标题样式并强制编号 ---
+\usepackage{titlesec}
+
+% 设置编号深度
+\setcounter{secnumdepth}{3} 
+
+% 格式化一级标题 ，在标题后加横线
+\titleformat{\section}[display]
+  {\normalfont\Large\bfseries}
+  {\thesection}
+  {1em}
+  {}
+  [\vspace{1ex}\hrule]
+
+% 格式化二级标题
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}
+  {\thesubsection} % <-- 加入编号
+  {1em}
+  {}
+
+% 格式化三级标题 (paragraph)
+\renewcommand{\theparagraph}{\thesubsection.\arabic{paragraph}}
+\titleformat{\paragraph}
+  {\normalfont\normalsize\bfseries}
+  {\theparagraph} % <-- 加入编号
+  {1em}
+  {}
+
+% 字体设置 
+\usepackage{xeCJK}
+\setmainfont{Times New Roman}
+\setsansfont{Arial} 
+\setmonofont{Courier New}
+\setCJKmainfont{STFangsong}
+\setCJKsansfont{STHeiti}
+\setCJKmonofont{STFangsong}
+
+% 解决图表标题的中文问题
+\usepackage{caption}
+% 全局设置：表格标题在上方，图片标题在下方。
+\captionsetup[table]{position=top}
+\captionsetup[figure]{position=bottom}
+\captionsetup{font=small, labelfont=bf}
+
+
+% ----------------------------------------------------------------------
+% 页面布局调整 (核心部分)
+% ----------------------------------------------------------------------
+\usepackage{geometry}
+\geometry{
+  a4paper,
+  left=20mm,
+  top=35mm, 
+  bottom=25mm,
+  textwidth=113mm,
+  marginparwidth=51mm,
+  marginparsep=5mm
+}
+
+% --- 文档信息 ---
+\title{Neuron modeling discussion}
+\author{独宇涵}
+\date{\today}
+
+\begin{document}
+
+% 应用 1.5 倍行距
+\onehalfspacing 
+
+\maketitle
+
+\tableofcontents
+
+% --- 优化 2: 在目录后添加分界线 ---
+\bigskip
+\noindent\rule{\linewidth}{0.4pt}
+\bigskip
+
+\section{模板使用指南}
+
+\subsection{基本文本与边注} 
+这是正文部分的第一段。`tufte-latex` 宏包提供了一个非常优雅的笔记记录方式。正文在页面的左侧，而补充说明、引申思考、或者相关的引用可以被放置在右侧的边注区域。这种方式可以让主线内容保持清晰连贯，同时又不丢失重要的辅助信息。\sidenote{这是一个边注（sidenote）的示例。它会自动与正文中标记的位置在垂直方向上对齐。} 正如您所见，这个边注就出现在了这段话的旁边。
+
+我们可以继续书写正文内容。\lipsum[1][1-4] 这里的拉丁文仅用于填充版面，以展示长段落的排版效果。\sidenote{这里是第二个边注，用来解释 `lipsum` 的作用。`lipsum` 宏包可以方便地生成无意义的占位文本。} 所有的字体都已经按照您的要求进行了设置：中文是仿宋，而 English text in the paragraph uses Times New Roman.
+
+\subsection{图表示例} 
+
+图表是笔记中不可或缺的元素。`tufte-latex` 提供了特殊的浮动体环境，可以将图表也放置在边注区域。
+
+\paragraph{边注图片}
+下面是一个将图片放置在右侧边注区的例子。当图片或表格较小，适合作为补充说明时，这种方式非常有用。它不会打断正文的阅读流。我们在这段话的末尾引用这张图，见图 \ref{fig:margin-fig}。
+
+\begin{marginfigure}
+  \includegraphics[width=\linewidth]{example-image-a} 
+  % 图片的标题在下方，是正确的
+  \caption{这是一个放置在边注区的图片。它的宽度被自动设置为边注栏的宽度。}
+  \label{fig:margin-fig}
+\end{marginfigure}
+
+正文可以继续。即使插入了边注图片，正文的排版也完全不受影响，这正是其设计的精妙之处。\lipsum[2][1-3]
+
+\paragraph{通栏图片} 
+如果图片非常重要，或者尺寸较大，不适合放在边注区，我们可以使用通栏（full width）的图片。这需要使用带星号的 `figure*` 环境。
+
+\begin{figure*}
+  \includegraphics[width=\linewidth]{example-image-b}
+  % 图片的标题在下方，是正确的
+  \caption{这是一个通栏图片，它会横跨正文和边注两个区域。适合展示重要或宽幅的图像。}
+  \label{fig:full-fig}
+\end{figure*}
+
+
+\section{表格示例}
+
+与图片类似，表格也可以被放置在边注区或者通栏显示。
+
+\subsection{边注表格}
+
+小型的总结性表格非常适合放在边注区，如下表示例（表 \ref{tab:margin-tab}）。
+\begin{margintable}
+  % --- 核心修改：将标题和标签移到表格数据的上方 ---
+  \caption{一个简单的边注表格。}
+  \label{tab:margin-tab}
+  \centering
+  \begin{tabular}{l c}
+    \toprule
+    项目 & 数值 \\
+    \midrule
+    参数 A & 10.5 \\
+    参数 B & 22.1 \\
+    参数 C & 7.8  \\
+    \bottomrule
+  \end{tabular}
+\end{margintable}
+我们可以在正文中继续讨论表格中的数据，而读者可以很方便地同时看到数据和分析。例如，参数 A 和参数 C 的和远小于参数 B。
+
+\subsection{正文宽度表格}
+
+对于需要在主文本区域内显示，并且宽度与正文一致的表格，可以使用标准的 `table` 环境，并结合 `tabular*` 来精确控制宽度。如表 \ref{tab:text-width-tab} 所示。
+
+\begin{table}[h!]
+    % 这个表格的标题位置本来就是正确的
+    \caption{一个与正文等宽的三线表。}
+    \label{tab:text-width-tab}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} l c c r}
+        \toprule
+        产品类别 & 季度一销量 & 季度二销量 & 增长率 (\%) \\
+        \midrule
+        电子产品 & 1,200 & 1,500 & 25.0 \\
+        家居用品 & 850 & 920 & 8.2 \\
+        图书音像 & 2,100 & 1,950 & -7.1 \\
+        \bottomrule
+    \end{tabular*}
+\end{table}
+
+\lipsum[3] % 再来一段占位文字作为结尾。
+
+\end{document}
