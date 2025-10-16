@@ -82,17 +82,12 @@ P_R = sum(P_SR, dims=1)  # Marginal probabilities P(R)
 ```
 
 ```julia
-MI = 0.0
-for s in 1:2  # S=0,1
-    for r in 1:2  # R=0,1
-        P_s_r = P_SR[s, r]
-        P_s = P_S[s]
-        P_r = P_R[r]
-        if P_s_r > 0.0
-            MI += P_s_r * log2(P_s_r / (P_s * P_r))
-        end
-    end
-end
+# 循环内部：
+    P_s_r = P_SR[s, r]
+    P_s = P_S[s]
+    P_r = P_R[r]
+    if P_s_r > 0.0
+        MI += P_s_r * log2(P_s_r / (P_s * P_r))
 ```
 
 补全代码后的运算结果为
@@ -138,3 +133,12 @@ end
 
 补全后的代码运行结果如图所示
 ![image](img/newplot.png)
+
+---
+
+## Part two
+在Fisher information的计算过程中，我们定义了调谐函数，$\theta_{pref}$决定了调谐函数的中心，而$\sigma$则表示调谐宽度，越小曲线越窄，调谐曲线的双侧峰值在$\theta = \theta_{pref} +/- \sigma \sqrt{2}$处达到，通过改变这两个参数的值我们可以得到不同形状的曲线
+比如将曲线的中心值设置为 60 度可以得到如下所示的曲线
+![](img/newplot2.png)
+而将 $\sigma$ 的值增大一倍则可以让曲线的峰值宽度增大一倍
+![](img/newplot60.png)
